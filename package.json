@@ -1,0 +1,49 @@
+{
+  "name": "@intech.lu/biome-config",
+  "version": "1.0.0",
+  "description": "Biome rules for InTech projects",
+  "keywords": [
+    "style guide",
+    "lint",
+    "biome",
+    "format",
+    "intech"
+  ],
+  "author": "InTech S.A. <equipe.titane@intech.lu> (https://www.intech.lu)",
+  "contributors": [
+    {
+      "name": "Tristan Chaumont",
+      "email": "tristan.chaumont@intech.lu"
+    },
+    {
+      "name": "Loïc Gasiorowski",
+      "email": "loic.gasiorowski@intech.lu"
+    },
+    {
+      "name": "Silvio Brancati",
+      "email": "silvio.brancati@intech.lu"
+    },
+    {
+      "name": "Jacques Vernay",
+      "email": "jacques.vernay@intech.lu"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/intech-lu/biome-config"
+  },
+  "homepage": "https://github.com/intech-lu/biome-config",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./vanilla": "./configs/vanilla.jsonc",
+    "./jsx": "./configs/jsx.jsonc",
+    "./react": "./configs/react.jsonc"
+  },
+  "dependencies": {
+    "@biomejs/biome": "^2.1.3"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

@@ -1,0 +1,624 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedKeys": "on",
+				"useSortedProperties": "on"
+			}
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true
+	},
+	"formatter": {
+		"enabled": true,
+		"bracketSpacing": true,
+		// Don't format files with errors
+		"formatWithErrors": false,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		 // Line Feed only (\n), common on Linux and macOS as well as inside git repos
+		"lineEnding": "lf",
+		"lineWidth": 100,
+		// The attribute position style in HTMLish languages. With 'auto', the attributes 
+		// are automatically formatted, and they will collapse in multiple lines only when 
+		// they hit certain criteria.
+		"attributePosition": "auto"
+	},
+	"javascript": {
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": false
+		},
+		"formatter": {
+			"enabled": true,
+			"quoteStyle": "single",
+			// Only add quote to object properties that need it. We've set it to “asNeeded”, 
+			// as “consistent” is not yet supported by Biome.
+			"quoteProperties": "asNeeded",
+			"trailingCommas": "all",
+			"semicolons": "always",
+			"arrowParentheses": "asNeeded",
+			"indentStyle": "space",
+			"indentWidth": 2,
+			"lineEnding": "lf",
+			"lineWidth": 100,
+			"bracketSameLine": false,
+			"bracketSpacing": true
+		},
+		"linter": {
+			"enabled": true
+		}
+	},
+	"json": {
+		"parser": {
+			"allowComments": true,
+			"allowTrailingCommas": false
+		},
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "space",
+			"indentWidth": 2,
+			"lineEnding": "lf",
+			"lineWidth": 80,
+			"trailingCommas": "none"
+		},
+		"linter": {
+			"enabled": true
+		}
+	},
+	"css": {
+		"parser": {
+			"cssModules": false
+		},
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "space",
+			"indentWidth": 2,
+			"lineEnding": "lf",
+			"lineWidth": 80,
+			"quoteStyle": "single"
+		},
+		"linter": {
+			"enabled": true
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"a11y": {
+				// Enforce that ARIA properties are valid for the roles that are supported by the element.
+				// Invalid ARIA properties can make it difficult for users of assistive technologies to
+				// understand the purpose of the element.
+				"useAriaPropsSupportedByRole": "error",
+				// Check that a generic font family is used as a last resort in font-family declarations.
+				// Generic font families are a fallback for when the specified font is not available.
+				"useGenericFontNames": "error",
+				// The HTML autocomplete attribute only accepts specific predefined values. This allows for
+				// more detailed purpose definitions compared to the type attribute. Using these predefined
+				// values, user agents and assistive technologies can present input purposes to users in
+				// different ways.
+				"useValidAutocomplete": "error"
+			},
+			"complexity": {
+				"noAdjacentSpacesInRegex": "error",
+				"noArguments": "error",
+				// Disallow primitive type aliases and misleading types, the Function type and
+				// the misleading non-nullable type {}.
+				// For further information, see https://biomejs.dev/linter/rules/no-banned-types/				
+				"noBannedTypes": "error",
+				// The comma operator includes multiple expressions where only one is expected. It
+				// evaluates every operand from left to right and returns the value of the last operand.
+				// It frequently obscures side effects, and its use is often an accident. The use of the
+				// comma operator in the initialization and update parts of a for is still allowed.
+				"noCommaOperator": "error",
+				// TypeScript permits the use of empty type parameter lists in type alias and interface
+				// declarations; however, this practice is generally discouraged. Allowing empty type
+				// parameter lists can lead to unclear or ambiguous code, where the intention of the
+				// generic type is not self-evident. This rule disallows empty type parameter lists in type
+				// alias and interface declarations.
+				"noEmptyTypeParameters": "error",
+				// Reducing complexity helps to make code more maintenable, both by making it easier to
+				// understand as well as by reducing chances of accidental side-effects when making
+				// changes. This rule calculates a complexity score for every function and disallows those
+				// that exceed a configured complexity threshold (default: 15).
+				"noExcessiveCognitiveComplexity": "error",
+				"noExcessiveNestedTestSuites": "error",
+				"noExtraBooleanCast": "error",
+				// To achieve the same result (flattening an array) more concisely and efficiently, you
+				// should use flat instead.
+				"noFlatMapIdentity": "error",
+				// Using forEach can lead to performance issues, especially when working with large arrays.
+				// When more requirements are added on, forEach typically gets chained with other methods
+				// like filter or map, causing multiple iterations over the same Array. Encouraging for
+				// loops discourages chaining and encourages single-iteration logic (e.g. using a continue
+				// instead of filter).
+				"noForEach": "error",
+				"noStaticOnlyClass": "error",
+				// In JavaScript, the this keyword in static contexts refers to the class (the constructor)
+				// instance, not an instance of the class. This can be confusing for developers coming
+				// from other languages where this typically refers to an instance of the class, not the
+				// class itself.
+				"noThisInStatic": "error",
+				// A catch clause that only rethrows the original error is redundant, and has no effect on
+				// the runtime behavior of the program. These redundant clauses can be a source of
+				// confusion and code bloat, so it’s better to disallow these unnecessary catch clauses.
+				"noUselessCatch": "error",
+				"noUselessContinue": "error",
+				// The rule ignores: decorated classes, constructors with at least one parameter property,
+				// private and protected constructors.
+				"noUselessConstructor": "error",
+				// An empty export {} is sometimes useful to turn a file that would otherwise be a script
+				// into a module. However, an export {} statement does nothing if there are any other
+				// top-level import or export in the file.
+				"noUselessEmptyExport": "error",
+				// Escaping non-special characters in regular expression literals doesn’t have any effect.
+				// Hence, they may confuse a reader.
+				"noUselessEscapeInRegex": "info",
+				// If a loop contains no nested loops or switches, labeling the loop is unnecessary.
+				"noUselessLabel": "error",
+				// In JavaScript, prior to ES6, standalone code blocks delimited by curly braces do not
+				// create a new scope and have no use. In ES6, code blocks may create a new scope if a
+				// block-level binding (let and const), a class declaration or a function declaration
+				// (in strict mode) are present. A block is not considered redundant in these cases.
+				"noUselessLoneBlockStatements": "error",
+				"noUselessRename": "error",
+				"noUselessStringConcat": "error",
+				// String.raw is useless when contains a raw string without any escape-like sequence.
+				"noUselessStringRaw": "info",
+				// An empty case clause that precedes the default clause is useless.
+				"noUselessSwitchCase": "error",
+				"noUselessTernary": "error",
+				// Arrow functions inherits this from their enclosing scope; this makes this aliasing
+				// useless in this situation.
+				"noUselessThisAlias": "error",
+				// Generic type parameters (<T>) in TypeScript may be constrained with extends. A supplied
+				// type must then be a subtype of the supplied constraint. All types are subtypes of any
+				// and unknown. It is thus useless to extend from any or unknown.
+				"noUselessTypeConstraint": "error",
+				"noUselessUndefinedInitialization": "error",
+				// The void operator is often used merely to obtain the undefined primitive value, usually
+				// using void(0) (which is equivalent to void 0). In these cases, the global variable
+				// undefined can be used.
+				"noVoid": "error",
+				// An arrow function expression is a compact alternative to a regular function expression,
+				// with an important distinction: this is not bound to the arrow function. It inherits this
+				// from its parent scope.
+				"useArrowFunction": "error",
+				"useDateNow": "error",
+				"useFlatMap": "error",
+				"useLiteralKeys": "error",
+				// JavaScript provides literal forms for binary, octal, and hexadecimal numbers. For 
+				// example: 0b11, 0o77, and 0xff. Using the literal forms enable static code analysis and
+				// avoid unnecessary computations.
+				"useNumericLiterals": "error",
+				"useOptionalChain": "error",
+				"useRegexLiterals": "error",
+				"useSimpleNumberKeys": "error",
+				"useSimplifiedLogicExpression": "error",
+				"useWhile": "error"
+			},
+			"correctness": {
+				"noConstAssign": "error",
+				"noConstantCondition": "error",
+				"noConstantMathMinMaxClamp": "error",
+				// Returning a value from a constructor of a class is a possible error. Forbidding this 
+				// pattern prevents errors resulting from unfamiliarity with JavaScript or a copy-paste 
+				// error. Only returning without a value is allowed, as it’s a control flow statement.
+				"noConstructorReturn": "error",
+				// Empty character classes don’t match anything. In contrast, negated empty classes match
+				// any character. They are often the result of a typing mistake.
+				"noEmptyCharacterClassInRegex": "error",
+				"noEmptyPattern": "error",
+				// ECMAScript provides several global objects that are intended to be used as-is. Some of
+				// these objects look as if they could be constructors due their capitalization (such as
+				// Math and JSON) but will throw an error if you try to execute them as functions.
+				"noGlobalObjectCalls": "error",
+				"noInnerDeclarations": "error",
+				// Some builtins require new to be instantiated, while others do not. See
+				// https://biomejs.dev/linter/rules/no-invalid-builtin-instantiation/ for more information.
+				"noInvalidBuiltinInstantiation": "error",
+				"noInvalidConstructorSuper": "error",
+				// A valid and standard direction value is one of the following: an angle or "to" plus a
+				// side-or-corner (to top, to bottom, to top right, etc.).
+				"noInvalidDirectionInLinearGradient": "error",
+				// For a named grid area to be valid, all strings must define: the same number of cell 
+				// tokens, at least one cell token. And all named grid areas that spans multiple grid cells
+				// must form a single filled-in rectangle.
+				"noInvalidGridAreas": "error",
+				// Any @import rules must precede all other valid at-rules and style rules in a stylesheet
+				// (ignoring @charset and @layer), or else the @import rule is invalid.
+				"noInvalidPositionAtImportRule": "error",
+				"noInvalidUseBeforeDeclaration": "error",
+				// Disallow missing var function for css variables.
+				"noMissingVarFunction": "error",
+				// Can be useful but as the intent is to have a generic configuration shareable across
+				// multiple different projects, we chose to turn it off.
+				"noNodejsModules": "off",
+				// Although this syntax is deprecated, it is still supported for compatibility reasons. If
+				// the ECMAScript host is not a web browser, this syntax is optional. However, web browsers
+				// are still required to support it, but only in non-strict mode. Regardless of your
+				// targeted environment, it is recommended to avoid using these escape sequences in new
+				// code.
+				"noNonoctalDecimalEscape": "warn",
+				"noPrivateImports": "error",
+				"noPrecisionLoss": "error",
+				"noSelfAssign": "error",
+				// While returning a value from a setter does not produce an error, the returned value is
+				// being ignored. Therefore, returning a value from a setter is either unnecessary or a
+				// possible error.
+				"noSetterReturn": "error",
+				"noStringCaseMismatch": "error",
+				// Lexical declarations in switch clauses are accessible in the entire switch. However, it
+				// only gets initialized when it is assigned, which will only happen if the switch clause
+				// where it is defined is reached.
+				"noSwitchDeclarations": "error",
+				"noUndeclaredDependencies": "error",
+				// If you need to allow-list some global bindings, you can use the javascript.globals
+				// configuration.
+				"noUndeclaredVariables": "error",
+				"noUnknownFunction": "error",
+				// This rule considers media feature names defined in the CSS Specifications, up to and
+				// including Editor’s Drafts, to be known. This rule also checks vendor-prefixed media
+				// feature names.
+				"noUnknownMediaFeatureName": "error",
+				"noUnknownProperty": "error",
+				// Disallow unknown pseudo-class selectors.
+				"noUnknownPseudoClass": "error",
+				// Disallow unknown pseudo-element selectors.
+				"noUnknownPseudoElement": "error",
+				// This rule considers tags defined in the HTML, SVG, and MathML specifications to be known.
+				"noUnknownTypeSelector": "error",
+				"noUnknownUnit": "error",
+				"noUnmatchableAnbSelector": "error",
+				"noUnreachable": "error",
+				"noUnreachableSuper": "error",
+				// JavaScript suspends the control flow statements of try and catch blocks until the
+				// execution of finally block finishes. So, when return, throw, break or continue is used
+				// in finally, control flow statements inside try and catch are overwritten, which is
+				// considered as unexpected behavior.
+				"noUnsafeFinally": "error",
+				"noUnsafeOptionalChaining": "error",
+				"noUnusedFunctionParameters": "error",
+				"noUnusedImports": "error",
+				"noUnusedLabels": "error",
+				"noUnusedPrivateClassMembers": "error",
+				// There is an exception to this rule: variables that starts with underscore, e.g. 
+				// let _something;. The pattern of having an underscore as prefix of a name of variable is
+				// a very diffuse pattern among programmers, and Biome decided to follow it.
+				"noUnusedVariables": "error",
+				"noVoidTypeReturn": "error",
+				"useImportExtensions": "error",
+				"useIsNan": "error",
+				"useValidForDirection": "error",
+				"useValidTypeof": "error",
+				"useYield": "error"
+			},
+			"performance": {
+				// Spread syntax should be avoided on accumulators (like those in .reduce) because it
+				// causes a time complexity of O(n^2) instead of O(n).
+				"noAccumulatingSpread": "error",
+				// A barrel file is a file that re-exports all of the exports from other files in a
+				// directory. This structure results in the unnecessary loading of many modules,
+				// significantly impacting performance in large-scale applications. Additionally, it
+				// complicates the codebase, making it difficult to navigate and understand the project’s
+				// dependency graph. This rule ignores .d.ts files and type-only exports.
+				"noBarrelFile": "error",
+				// The delete operator should be avoided because it can prevent some optimizations of
+				// JavaScript engines. Moreover, it can lead to unexpected results. For instance, deleting
+				// an array element does not change the length of the array. The only legitimate use of
+				// delete is on an object that behaves like a map. To allow this pattern, this rule does
+				// not report delete on computed properties that are not literal values. Consider using Map
+				// instead of an object.
+				"noDelete": "error",
+				// Accessing namespace imports dynamically can prevent efficient tree shaking and increase
+				// bundle size. This happens because the bundler cannot determine which parts of the
+				// namespace are used at compile time, so it must include the entire namespace in the
+				// bundle. Instead, consider using named imports or if that is not possible access the
+				// namespaced import properties statically.
+				"noDynamicNamespaceImportAccess": "error",
+				// Deeply nested import chains in modular projects, where a barrel file imports another
+				// barrel file, can lead to increased load times and complexity. This structure results in
+				// the unnecessary loading of many modules, significantly impacting performance in
+				// large-scale applications. Additionally, it complicates the codebase, making it difficult
+				// to navigate and understand the project’s dependency graph.
+				"noReExportAll": "error",
+				// We turn off this rule because some library might not comply with it, and it would be a
+				// shame to not use them because of this rule.
+				"noNamespaceImport": "off",
+				// As Biome explains it in the documentation, this rule can hurt performance in some cases
+				// (startup times, longer page loads) so we decided to turn it off.
+				"useTopLevelRegex": "off"
+			},
+			"security": {
+				// The eval() function evaluates the passed string as a JavaScript code. The executed code
+				// can access and mutate variables in the scope where the function is called. The use of
+				// eval() exposes to security risks and performance issues. If the executed code is somehow
+				// affected by a malicious party, then you may end up executing malicious code with the
+				// privileges of the caller. Moreover, changing variables in the caller’s scope is
+				// expensive in modern JavaScript interpreters.
+				"noGlobalEval": "error"
+			},
+			"style": {
+				// ESM-style imports are modern alternative to CommonJS require imports. Supported by all
+				// modern browsers and Node.js versions. Tooling can more easily statically analyze and
+				// tree-shake ESM imports compared to CommonJs.
+				"noCommonJs": "warn",
+				"noDefaultExport": "error",
+				// Disallow a lower specificity selector from coming after a higher specificity selector
+				// in CSS.
+				"noDescendingSpecificity": "warn",
+				"noDoneCallback": "error",
+				// TypeScript enums are not a type-level extension to JavaScript like type annotations or
+				// definitions. Users may wish to disable non-type-level extensions to use bundlers or
+				// compilers that only strip types.
+				"noEnum": "error",
+				"noExportedImports": "error",
+				"noInferrableTypes": "error",
+				// Namespaces are an old way to organize your code in TypeScript. They are not recommended
+				// anymore and should be replaced by ES6 modules (the import/export syntax).
+				"noNamespace": "error",
+				"noNegationElse": "error",
+				"noNestedTernary": "warn",
+				// TypeScript’s ! non-null assertion operator asserts to the type system that an expression
+				// is non-nullable, as in not null or undefined. Using assertions to tell the type system
+				// new information is often a sign that code is not fully type-safe. It’s generally better
+				// to structure program logic so that TypeScript understands when values may be nullable.
+				"noNonNullAssertion": "error",
+				// Assignment to a function parameters can be misleading and confusing, as modifying
+				// parameters will also mutate the arguments object. It is often unintended and indicative
+				// of a programmer error.
+				"noParameterAssign": "error",
+				// TypeScript includes a “parameter properties” shorthand for declaring a class constructor
+				// parameter and class property in one location. Parameter properties can confuse those new
+				// to TypeScript as they are less explicit than other ways of declaring and initializing
+				// class members. Moreover, private class properties, starting with #, cannot be turned
+				// into “parameter properties”. This questions the future of this feature.
+				"noParameterProperties": "error",
+				// A better practice is to keep all settings in one configuration file and reference it
+				// throughout the project.
+				"noProcessEnv": "info",
+				"noRestrictedGlobals": "error",
+				"noShoutyConstants": "error",
+				// String.slice() is preferred over String.substr() and String.substring() because it is a
+				// more popular option with clearer behavior, and it has a consistent counterpart in
+				// arrays.
+				"noSubstr": "info",
+				"noUnusedTemplateLiteral": "error",
+				"noUselessElse": "error",
+				// Disallow use of @value rule in css modules.
+				// Use of CSS variables is recommended instead of @value rule.
+				"noValueAtRule": "info",
+				"noYodaExpression": "error",
+				// Use of the Array constructor to construct a new array is generally discouraged in favor
+				// of array literal notation because of the single-argument pitfall and because the Array
+				// global may be redefined. The exception is when the Array constructor intentionally
+				// creates sparse arrays of a specified size by giving the constructor a single numeric
+				// argument.
+				"useArrayLiterals": "error",
+				"useAsConstAssertion": "error",
+				// Accessing an element at the end of an array or a string is inconvenient because you have
+				// to subtract the length of the array or the string from the backward 1-based index of the
+				// element to access. For example, to access the last element of an array or a string, you
+				// would have to write array[array.length - 1]. A more convenient way to achieve the same
+				// thing is to use the at() method with a negative index. To access the last element of an
+				// array or a string just write array.at(-1).
+				"useAtIndex": "info",
+				// JavaScript allows the omission of curly braces when a block contains only one statement.
+				// However, it is considered by many to be best practice to never omit curly braces around
+				// blocks, even when they are optional, because it can lead to bugs and reduces code
+				// clarity.
+				"useBlockStatements": "error",
+				// If an if statement is the only statement in the else block, it is often clearer to use
+				// an else if form.
+				"useCollapsedElseIf": "error",
+				// If an if (b) statement is the only statement in an if (a) block, it is often clearer to
+				// use an if (a && b) form.
+				"useCollapsedIf": "error",
+				"useConsistentArrayType": {
+					"level": "error",
+					"options": {
+						"syntax": "shorthand"
+					}
+				},
+				"useConsistentBuiltinInstantiation": "error",
+				"useConst": "error",
+				// Default and optional parameters that precede a required parameter cannot be omitted at
+				// call site.
+				"useDefaultParameterLast": "error",
+				"useDefaultSwitchClause": "error",
+				// Members of enums that don’t have explicit values are by default given sequentially
+				// increasing numbers. Allowing implicit values for enum members can cause bugs if enum
+				// declarations are modified over time.
+				"useEnumInitializers": "error",
+				// It is pretty common to implicitly check the length of a string or an array and is really
+				// handy, so we decided to turn it off.
+				"useExplicitLengthCheck": "off",
+				"useExponentiationOperator": "error",
+				// TypeScript allows specifying a type marker on an export to indicate that the export
+				// doesn’t exist at runtime. This allows transpilers to safely drop exports of types
+				// without looking for their definition.
+				"useExportType": "error",
+				"useFilenamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": true,
+						"requireAscii": true,
+						"filenameCases": ["camelCase", "kebab-case", "PascalCase"]
+					}
+				},
+				"useForOf": "error",
+				"useImportType": "error",
+				"useLiteralEnumMembers": "error",
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": true,
+						"requireAscii": true
+					}
+				},
+				"useNodeAssertStrict": "off", // à discuter
+				"useNodejsImportProtocol": "error",
+				"useNumberNamespace": "error",
+				"useSelfClosingElements": "error",
+				"useShorthandAssign": "error",
+				"useShorthandFunctionType": "error",
+				"useSingleVarDeclarator": "error",
+				"useTemplate": "error",
+				"useThrowNewError": "error",
+				"useThrowOnlyError": "error",
+				"useTrimStartEnd": "error"
+			},
+			"suspicious": {
+				"noApproximativeNumericConstant": "error",
+				// In expressions, it is common to mistype a comparison operator (such as ==) as an
+				// assignment operator (such as =). Moreover, the use of assignments in expressions is
+				// confusing. Indeed, expressions are often considered as side-effect free.
+				"noAssignInExpressions": "error",
+				// The executor function can also be an async function. However, this is usually a mistake,
+				// for a few reasons: If an async executor function throws an error, the error will be lost
+				// and won’t cause the newly-constructed Promise to reject. This could make it difficult to
+				// debug and handle some errors - If a Promise executor function is using await, this is
+				// usually a sign that it is not actually necessary to use the new Promise constructor, or
+				// the scope of the new Promise constructor can be reduced.
+				"noAsyncPromiseExecutor": "error",
+				// Assignment to a catch parameter can be misleading and confusing. It is often unintended
+				// and indicative of a programmer error.
+				"noCatchAssign": "error",
+				// A class declaration creates a variable that we can modify, however, the modification is
+				// a mistake in most cases.
+				"noClassAssign": "error",
+				"noCompareNegZero": "error",
+				// Labeled statements in JavaScript are used in conjunction with break and continue to
+				// control flow around multiple loops. Their use for other statements is suspicious and
+				// unfamiliar.
+				"noConfusingLabels": "error",
+				// void in TypeScript refers to a function return that is meant to be ignored. Attempting
+				// to use a void type outside of a return type or a type parameter is often a sign of
+				// programmer error. void can also be misleading for other developers even if used
+				// correctly.
+				"noConfusingVoidType": "error",
+				// We consider the use of console.log() in production code a bad practice, but it's useful
+				// for debugging purposes during development, and console is used in Node.js to output
+				// information to the user, so we won't throw an error, but we'll warn about it.
+				"noConsole": "warn",
+				// Const enums are enums that should be inlined at use sites. Const enums are not supported
+				// by bundlers and are incompatible with the isolatedModules mode. Their use can lead to
+				// import nonexistent values (because const enums are erased).
+				"noConstEnum": "error",
+				// Control characters are hidden special characters that are numbered from 0 to 31 in the
+				// ASCII system. They’re not commonly used in JavaScript text. So, if you see them in a
+				// pattern (called a regular expression), it’s probably a mistake.
+				"noControlCharactersInRegex": "error",
+				"noDebugger": "error",
+				// It’s not recommended to use document.cookie directly as it’s easy to get the string
+				// wrong. Instead, you should use the Cookie Store API.
+				"noDocumentCookie": "warn",
+				"noDoubleEquals": "error",
+				"noDuplicateAtImportRules": "error",
+				"noDuplicateCase": "error",
+				"noDuplicateClassMembers": "error",
+				// This rule checks the declaration blocks for duplicate custom properties in CSS.
+				"noDuplicateCustomProperties": "error",
+				"noDuplicateElseIf": "error",
+				"noDuplicateFontNames": "error",
+				"noDuplicateObjectKeys": "error",
+				"noDuplicateParameters": "error",
+				// This rule checks the declaration blocks for duplicate properties in CSS.
+				// It ignores custom properties.
+				"noDuplicateProperties": "error",
+				"noDuplicateSelectorsKeyframeBlock": "error",
+				"noDuplicateTestHooks": "error",
+				"noEmptyBlock": "error",
+				"noEmptyBlockStatements": "error",
+				"noEmptyInterface": "error",
+				"noEvolvingTypes": "error",
+				"noExplicitAny": "error",
+				// This rule aims to eliminate duplicate runs of tests by exporting things from test files.
+				// If you import from a test file, then all the tests in that file will be run in each
+				// imported instance, so bottom line, don’t export from a test, but instead move helper
+				// functions into a separate file when they need to be shared across tests.
+				"noExportsInTest": "error",
+				"noExtraNonNullAssertion": "error",
+				"noFallthroughSwitchClause": "error",
+				"noFocusedTests": "error",
+				"noFunctionAssign": "error",
+				"noGlobalAssign": "error",
+				"noGlobalIsFinite": "error",
+				"noGlobalIsNan": "error",
+				"noImplicitAnyLet": "error",
+				// Using !important within keyframes declarations is completely ignored in some browsers.
+				"noImportantInKeyframe": "error",
+				"noImportAssign": "error",
+				"noIrregularWhitespace": "error",
+				"noLabelVar": "error",
+				// Unicode includes the characters which are made with multiple code points. e.g. Á, 🇯🇵,
+				// 👨‍👩‍👦. A RegExp character class /[abc]/ cannot handle characters with multiple code
+				// points. For example, the character ❇️ consists of two code points: ❇ (U+2747) and
+				// VARIATION SELECTOR-16 (U+FE0F). If this character is in a RegExp character class, it
+				// will match to either ❇ or VARIATION SELECTOR-16 rather than ❇️. This rule reports the
+				// regular expressions which include multiple code point characters in character class
+				// syntax.
+				"noMisleadingCharacterClass": "error",
+				"noMisleadingInstantiator": "error",
+				"noMisplacedAssertion": "error",
+				"noMisrefactoredShorthandAssign": "error",
+				"noOctalEscape": "error",
+				"noPrototypeBuiltins": "error",
+				"noReactSpecificProps": "error",
+				"noRedeclare": "error",
+				"noRedundantUseStrict": "error",
+				"noSelfCompare": "error",
+				"noShadowRestrictedNames": "error",
+				"noShorthandPropertyOverrides": "error",
+				"noSkippedTests": "error",
+				"noSparseArray": "error",
+				"noTemplateCurlyInString": "error",
+				// When combining objects with a then method (thenable objects) with await expressions or
+				// dynamic imports, caution is necessary. These syntaxes interpret the object’s then method
+				// as intended for the resolution or rejection of a promise, which can lead to unexpected
+				// behavior or errors.
+				"noThenProperty": "error",
+				// Declaration merging between classes and interfaces is unsafe. The TypeScript Compiler
+				// doesn’t check whether properties defined in the interface are initialized in the class.
+				// This can cause lead to TypeScript not detecting code that will cause runtime errors.
+				"noUnsafeDeclarationMerging": "error",
+				"noUnsafeNegation": "error",
+				"noVar": "error",
+				// The with statement is potentially problematic because it adds members of an object to
+				// the current scope, making it impossible to tell what a variable inside the block
+				// actually refers to.
+				"noWith": "error",
+				// Overload signatures must be adjacent. If a key is defined multiple times, only the last
+				// definition takes effect. Previous definitions are ignored. This rule is useful for
+				// preventing accidental overloads that are not adjacent. It is recommended to keep the
+				// overload signatures adjacent to make the code easier to read and maintain.
+				"useAdjacentOverloadSignatures": "error",
+				"useAwait": "error",
+				"useDefaultSwitchClauseLast": "error",
+				"useErrorMessage": "error",
+				"useGetterReturn": "error",
+				// Looping over objects with a for-in loop will include properties inherited through the
+				// prototype chain. This behavior can lead to unexpected items in your for loop.
+				"useGuardForIn": "error",
+				// In JavaScript some array-like objects such as arguments are not instances of the Array
+				// class. Moreover, the global Array class can be different between two execution contexts.
+				// For instance, two frames in a web browser have a distinct Array class. Passing arrays
+				// across these contexts, results in arrays that are not instances of the contextual global
+				// Array class. To avoid these issues, use Array.isArray() instead of instanceof Array.
+				"useIsArray": "error",
+				"useNamespaceKeyword": "error",
+				"useNumberToFixedDigitsArgument": "error",
+				"useStrictMode": "error"
+			}
+		}
+	}
+}
