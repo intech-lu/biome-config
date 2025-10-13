@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
   "assist": {
 		"enabled": true,
 		"actions": {
@@ -219,6 +219,9 @@
 				// changes. This rule calculates a complexity score for every function and disallows those
 				// that exceed a configured complexity threshold (default: 15).
 				"noExcessiveCognitiveComplexity": "error",
+				// Defaults to 50 lines per function. We don't make this an error as sometimes long functions
+				// are justified, but we want to be warned about them.
+				"noExcessiveLinesPerFunction": "warn",
 				"noExcessiveNestedTestSuites": "error",
 				"noExtraBooleanCast": "error",
 				// To achieve the same result (flattening an array) more concisely and efficiently, you
@@ -230,6 +233,13 @@
 				// loops discourages chaining and encourages single-iteration logic (e.g. using a continue
 				// instead of filter).
 				"noForEach": "error",
+				// JavaScript allows shorthand type conversions by using operators like !!, +, ~, etc.
+				// These shortcuts can make the code harder to read and understand, especially for
+				// developers who are not familiar with these patterns. Using explicit type conversion
+				// functions like Boolean(), Number(), and String() makes the intent clearer and more
+				// readable.
+				"noImplicitCoercions": "error",
+				"noImportantStyles": "error",
 				"noStaticOnlyClass": "error",
 				// In JavaScript, the this keyword in static contexts refers to the class (the constructor)
 				// instance, not an instance of the class. This can be confusing for developers coming
@@ -286,6 +296,13 @@
 				"useArrowFunction": "error",
 				"useDateNow": "error",
 				"useFlatMap": "error",
+				// Array#findIndex() and Array#findLastIndex() are intended for more complex needs. If you
+				// are just looking for the index where the given item is present, then the code can be
+				// simplified to use Array#indexOf() or Array#lastIndexOf(). This applies to any search
+				// with a literal, a variable, or any expression that doesn’t have any explicit side
+				// effects. However, if the expression you are looking for relies on an item related to
+				// the function (its arguments, the function self, etc.), the case is still valid.
+				"useIndexOf": "error",
 				"useLiteralKeys": "error",
 				// JavaScript provides literal forms for binary, octal, and hexadecimal numbers. For 
 				// example: 0b11, 0o77, and 0xff. Using the literal forms enable static code analysis and
@@ -311,6 +328,11 @@
 				// any character. They are often the result of a typing mistake.
 				"noEmptyCharacterClassInRegex": "error",
 				"noEmptyPattern": "error",
+				// Disallow the use of __dirname and __filename in the global scope. They are not available
+				// in ES modules. Starting with Node.js 20.11, import.meta.dirname and import.meta.filename
+				// have been introduced in ES modules, providing identical functionality to __dirname and
+				// __filename in CommonJS (CJS).
+				"noGlobalDirnameFilename": "error",
 				// ECMAScript provides several global objects that are intended to be used as-is. Some of
 				// these objects look as if they could be constructors due their capitalization (such as
 				// Math and JSON) but will throw an error if you try to execute them as functions.
@@ -333,6 +355,7 @@
 				"noInvalidUseBeforeDeclaration": "error",
 				// Disallow missing var function for css variables.
 				"noMissingVarFunction": "error",
+				"noNestedComponentDefinitions": "error", // React Only
 				// Can be useful but as the intent is to have a generic configuration shareable across
 				// multiple different projects, we chose to turn it off.
 				"noNodejsModules": "off",
@@ -344,6 +367,8 @@
 				"noNonoctalDecimalEscape": "warn",
 				"noPrecisionLoss": "error",
 				"noPrivateImports": "error",
+				"noProcessGlobal": "error",
+				"noReactPropAssignments": "error", // React Only
         // ReactDOM.render() currently returns a reference to the root ReactComponent instance.
         // However, using this return value is legacy and should be avoided because future versions
         // of React may render components asynchronously in some cases. If you need a reference to
@@ -400,7 +425,15 @@
         "useHookAtTopLevel": "error", // React Only
 				"useImportExtensions": "error",
         "useIsNan": "error",
+				// ECMAScript modules can import JSON modules. However, the specific import assertion with
+				// { type: "json" } is required to inform the JavaScript runtime that the imported file
+				// should be parsed as JSON. Omitting this assertion can lead to runtime errors or
+				// misinterpretation of the imported module.
+				"useJsonImportAttributes": "error",
         "useJsxKeyInIterable": "error", // JSX Only (compatible with React)
+				"useParseIntRadix": "error",
+				"useSingleJsDocAsterisk": "error",
+				"useUniqueElementIds": "error", // React Only
         "useValidForDirection": "error",
 				"useValidTypeof": "error",
 				"useYield": "error"
@@ -409,6 +442,11 @@
 				// Spread syntax should be avoided on accumulators (like those in .reduce) because it
 				// causes a time complexity of O(n^2) instead of O(n).
 				"noAccumulatingSpread": "error",
+				// Using await in a loop makes your asynchronous operations run one after another instead
+				// of all at once. This can slow things down and might cause unhandled errors. Instead,
+				// create all the promises together and then wait for them simultaneously using methods
+				// like Promise.all().
+				"noAwaitInLoops": "error",
 				// A barrel file is a file that re-exports all of the exports from other files in a
 				// directory. This structure results in the unnecessary loading of many modules,
 				// significantly impacting performance in large-scale applications. Additionally, it
@@ -473,6 +511,7 @@
 				"noExportedImports": "error",
         "noImplicitBoolean": "error", // JSX Only (compatible with React)
         "noInferrableTypes": "error",
+				"noMagicNumbers": "error",
 				// Namespaces are an old way to organize your code in TypeScript. They are not recommended
 				// anymore and should be replaced by ES6 modules (the import/export syntax).
 				"noNamespace": "error",
@@ -542,6 +581,7 @@
 				},
 				"useConsistentBuiltinInstantiation": "error",
 				"useConsistentCurlyBraces": "error", // JSX Only (compatible with React)
+				"useConsistentObjectDefinitions": "error",
 				"useConst": "error",
 				// Default and optional parameters that precede a required parameter cannot be omitted at
 				// call site.
@@ -555,6 +595,9 @@
 				// handy, so we decided to turn it off.
 				"useExplicitLengthCheck": "off",
 				"useExponentiationOperator": "error",
+				// Turn off this rule as it is sometimes better for readability to not have exports
+				// necessarily at the end of the file.
+				"useExportsLast": "off",
 				// TypeScript allows specifying a type marker on an export to indicate that the export
 				// doesn’t exist at runtime. This allows transpilers to safely drop exports of types
 				// without looking for their definition.
@@ -569,6 +612,10 @@
 				},
 				"useForOf": "error",
         "useFragmentSyntax": "error", // JSX Only (compatible with React)
+				// When defining a property in a class or object, it’s common to have both a getter and a
+				// setter. This rule enforces that getter is defined right before the setter, making the
+				// code more maintainable and easier to read.
+				"useGroupedAccessorPairs": "error",
         "useImportType": "error",
 				"useLiteralEnumMembers": "error",
 				"useNamingConvention": {
@@ -581,14 +628,19 @@
 				"useNodeAssertStrict": "off", // à discuter
 				"useNodejsImportProtocol": "error",
 				"useNumberNamespace": "error",
+				"useNumericSeparators": "error",
+				"useObjectSpread": "error",
+				"useReadonlyClassProperties": "error",
 				"useSelfClosingElements": "error",
 				"useShorthandAssign": "error",
 				"useShorthandFunctionType": "error",
 				"useSingleVarDeclarator": "error",
+				"useSymbolDescription": "error",
 				"useTemplate": "error",
 				"useThrowNewError": "error",
 				"useThrowOnlyError": "error",
-				"useTrimStartEnd": "error"
+				"useTrimStartEnd": "error",
+				"useUnifiedTypeSignatures": "error"
       },
       "suspicious": {
         "noApproximativeNumericConstant": "error",
@@ -604,6 +656,8 @@
 				// usually a sign that it is not actually necessary to use the new Promise constructor, or
 				// the scope of the new Promise constructor can be reduced.
 				"noAsyncPromiseExecutor": "error",
+				"noBiomeFirstException": "error",
+				"noBitwiseOperators": "error",
 				// Assignment to a catch parameter can be misleading and confusing. It is often unintended
 				// and indicative of a programmer error.
 				"noCatchAssign": "error",
@@ -625,6 +679,10 @@
 				// for debugging purposes during development, and console is used in Node.js to output
 				// information to the user, so we won't throw an error, but we'll warn about it.
 				"noConsole": "warn",
+				// Comparisons which will always evaluate to true or false and logical expressions
+				// (||, &&, ??) which either always short-circuit or never short-circuit are both likely
+				// indications of programmer error.
+				"noConstantBinaryExpressions": "error",
 				// Const enums are enums that should be inlined at use sites. Const enums are not supported
 				// by bundlers and are incompatible with the isolatedModules mode. Their use can lead to
 				// import nonexistent values (because const enums are erased).
@@ -705,11 +763,16 @@
 				// as intended for the resolution or rejection of a promise, which can lead to unexpected
 				// behavior or errors.
 				"noThenProperty": "error",
+				"noTsIgnore": "error",
+				"noUnassignedVariables": "error",
+				"noUnknownAtRules": "error",
 				// Declaration merging between classes and interfaces is unsafe. The TypeScript Compiler
 				// doesn’t check whether properties defined in the interface are initialized in the class.
 				// This can cause lead to TypeScript not detecting code that will cause runtime errors.
 				"noUnsafeDeclarationMerging": "error",
 				"noUnsafeNegation": "error",
+				"noUselessRegexBackrefs": "error",
+				"noUselessEscapeInString": "error",
 				"noVar": "error",
 				// The with statement is potentially problematic because it adds members of an object to
 				// the current scope, making it impossible to tell what a variable inside the block
@@ -721,6 +784,11 @@
 				// overload signatures adjacent to make the code easier to read and maintain.
 				"useAdjacentOverloadSignatures": "error",
 				"useAwait": "error",
+				// Starting Biome v2.2, ignoring folders doesn’t require the use of the trailing /**. When
+				// using the pattern /**, you tell Biome to ignore all files inside a folder, but the
+				// folder is still crawled. This pattern can lead to poor performance, especially if the
+				// folder contains many files.
+				"useBiomeIgnoreFolder": "error",
 				"useDefaultSwitchClauseLast": "error",
 				"useErrorMessage": "error",
 				"useGetterReturn": "error",
@@ -733,8 +801,10 @@
 				// across these contexts, results in arrays that are not instances of the contextual global
 				// Array class. To avoid these issues, use Array.isArray() instead of instanceof Array.
 				"useIsArray": "error",
+				"useIterableCallbackReturn": "error",
 				"useNamespaceKeyword": "error",
 				"useNumberToFixedDigitsArgument": "error",
+				"useStaticResponseMethods": "error",
 				"useStrictMode": "error"
       }
     }

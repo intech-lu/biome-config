@@ -1,4 +1,7 @@
-image: node:22.17.1-alpine
+default:
+  image: node:22.17.1-alpine
+  tags:
+    - cluster
 
 cache:
   key: "$CI_PIPELINE_IID"
@@ -7,7 +10,19 @@ cache:
 
 stages:
   - install
+  - release
   - publish
+
+check-package-log:
+  stage: install
+  script:
+    - |
+      if grep -q "intech.dev" package-lock.json; then
+       echo "References to internal Nexus founded";
+       exit 1;
+      fi
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release/
 
 install:
   stage: install
@@ -15,17 +30,12 @@ install:
     - npm --userconfig=$NPMRC ci
   tags:
     - cluster
-    - kubernetes
-
 publish-snapshot:
   stage: publish
   only:
     - develop
   script:
     - npm --userconfig=$NPMRC --registry=$NPM_REGISTRY_SNAPSHOTS publish
-  tags:
-    - cluster
-    - kubernetes
 
 publish-release:
   stage: publish
@@ -35,4 +45,3 @@ publish-release:
     - npm --userconfig=$NPMRC --registry=$NPM_REGISTRY_RELEASES publish
   tags:
     - cluster
-    - kubernetes
