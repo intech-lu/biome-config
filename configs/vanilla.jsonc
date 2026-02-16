@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.0/schema.json",
 	"assist": {
 		"enabled": true,
 		"actions": {
@@ -95,18 +95,53 @@
 		"rules": {
 			"recommended": false,
 			"a11y": {
+				// The accessKey assigns a keyboard shortcut to the current element. However, 
+        // the accessKey value can conflict with keyboard commands used by screen readers 
+        // and keyboard-only users, which leads to inconsistent keyboard actions across 
+        // applications. To avoid accessibility complications, this rule suggests users 
+        // remove the accessKey attribute on elements.
+        "noAccessKey": "error",
+				"noAutofocus": "error",
+				// Elements that can be visually distracting can cause accessibility issues with visually 
+        // impaired users. Such elements are most likely deprecated, and should be avoided.
+        // By default, the following elements are visually distracting: <marquee> and <blink>.
+        "noDistractingElements": "error",
+				// Elements with a positive tabIndex override natural page content order. This causes
+        // elements without a positive tab index to come last when navigating using a keyboard.
+        "noPositiveTabindex": "error",
+				// Screen readers announce img elements as "images", so it is not necessary to redeclare
+        // this in alternative text.
+				"noRedundantAlt": "error",
+				// It is not possible to specify the alt attribute for the svg as for the img. To make svg
+        // accessible, the following methods are available: provide the title element as the first 
+        // child to svg OR provide role="img" and aria-label or aria-labelledby to svg.
+        "noSvgWithoutTitle": "error",
+				"useAriaPropsForRole": "error",
 				// Enforce that ARIA properties are valid for the roles that are supported by the element.
 				// Invalid ARIA properties can make it difficult for users of assistive technologies to
 				// understand the purpose of the element.
 				"useAriaPropsSupportedByRole": "error",
+				// Meaningful alternative text on elements helps users relying on screen readers to
+        // understand content's purpose within a page. This is a critical component of
+        // accessibility for screen reader users in order for them to understand the content’s
+        // purpose on the page. By default, this rule checks for alternative text on the following
+        // elements: <img>, <area>, <input type="image">, and <object>.
+        "useAltText": "error",
+				"useAnchorContent": "error",
+				"useButtonType": "error",
 				// Check that a generic font family is used as a last resort in font-family declarations.
 				// Generic font families are a fallback for when the specified font is not available.
 				"useGenericFontNames": "error",
+				"useHtmlLang": "error",
+        "useIframeTitle": "error",
+				"useMediaCaption": "error",
+				"useValidAriaRole": "error",
 				// The HTML autocomplete attribute only accepts specific predefined values. This allows for
 				// more detailed purpose definitions compared to the type attribute. Using these predefined
 				// values, user agents and assistive technologies can present input purposes to users in
 				// different ways.
-				"useValidAutocomplete": "error"
+				"useValidAutocomplete": "error",
+				"useValidLang": "error"
 			},
 			"complexity": {
 				"noAdjacentSpacesInRegex": "error",
@@ -162,6 +197,7 @@
 				// the runtime behavior of the program. These redundant clauses can be a source of
 				// confusion and code bloat, so it’s better to disallow these unnecessary catch clauses.
 				"noUselessCatch": "error",
+				"noUselessCatchBinding": "error",
 				"noUselessContinue": "error",
 				// The rule ignores: decorated classes, constructors with at least one parameter property,
 				// private and protected constructors.
@@ -194,6 +230,7 @@
 				// type must then be a subtype of the supplied constraint. All types are subtypes of any
 				// and unknown. It is thus useless to extend from any or unknown.
 				"noUselessTypeConstraint": "error",
+				"noUselessUndefined": "error",
 				"noUselessUndefinedInitialization": "error",
 				// The void operator is often used merely to obtain the undefined primitive value, usually
 				// using void(0) (which is equivalent to void 0). In these cases, the global variable
@@ -465,6 +502,7 @@
 						"syntax": "shorthand"
 					}
 				},
+				"useConsistentArrowReturn": "error",
 				"useConsistentBuiltinInstantiation": "error",
 				"useConsistentObjectDefinitions": "error",
 				"useConst": "error",
@@ -583,6 +621,7 @@
 				"noDuplicateClassMembers": "error",
 				// This rule checks the declaration blocks for duplicate custom properties in CSS.
 				"noDuplicateCustomProperties": "error",
+				"noDuplicateDependencies": "error",
 				"noDuplicateElseIf": "error",
 				"noDuplicateFontNames": "error",
 				"noDuplicateObjectKeys": "error",
@@ -595,6 +634,7 @@
 				"noEmptyBlock": "error",
 				"noEmptyBlockStatements": "error",
 				"noEmptyInterface": "error",
+				"noEmptySource": "error",
 				"noEvolvingTypes": "error",
 				"noExplicitAny": "error",
 				// This rule aims to eliminate duplicate runs of tests by exporting things from test files.
@@ -650,6 +690,7 @@
 				// This can cause lead to TypeScript not detecting code that will cause runtime errors.
 				"noUnsafeDeclarationMerging": "error",
 				"noUnsafeNegation": "error",
+				"noUnusedExpressions": "error",
 				"noUselessRegexBackrefs": "error",
 				"noUselessEscapeInString": "error",
 				"noVar": "error",

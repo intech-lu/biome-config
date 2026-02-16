@@ -1,6 +1,6 @@
 {
   "name": "@intech.lu/biome-config",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Biome rules for InTech projects",
   "keywords": [
     "style guide",
@@ -44,7 +44,7 @@
     "./react": "./configs/react.jsonc"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.3.10"
+    "@biomejs/biome": "^2.4.0"
   },
   "engines": {
     "node": ">=24.12.0"
