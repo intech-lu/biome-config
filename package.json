@@ -44,7 +44,7 @@
     "./react": "./configs/react.jsonc"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.4.0"
+    "@biomejs/biome": "^2.4.7"
   },
   "engines": {
     "node": ">=24.12.0"
